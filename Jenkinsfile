@@ -28,7 +28,7 @@ pipeline {
 
         stage('Construir Docker') {
             steps {
-                sh 'docker build -t miapp .'
+                sh 'docker build -t tecnogo-app .'
             }
         }
 
