@@ -1,41 +1,21 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18' // Usa la imagen de Node.js oficial con npm
-        }
+  agent any
+
+  stages {
+    stage('Instalar dependencias') {
+      steps {
+        sh 'npm install'
+      }
     }
-
-    environment {
-        NODE_ENV = "development"
+    stage('Ejecutar tests') {
+      steps {
+        sh 'npm test'
+      }
     }
-
-    stages {
-        stage('Preparar Frontend') {
-            steps {
-                dir('frontend') {
-                    sh 'npm install'
-                }
-            }
-        }
-
-        stage('Preparar Backend') {
-            steps {
-                dir('backend') {
-                    sh 'npm install'
-                }
-            }
-        }
-
-        stage('Construir Docker') {
-            steps {
-                sh 'docker build -t tecnogo-app .'
-            }
-        }
-
-        stage('Desplegar') {
-            steps {
-                echo 'Aquí iría el despliegue'
-            }
-        }
+    stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
     }
+  }
 }
